@@ -379,93 +379,8 @@ body {
     transform: translateY(0);
 }
 
-/* --- Education Section --- */
-.education-container {
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-}
-
-.education-card {
-    display: flex;
-    align-items: center;
-    padding: 20px 30px;
-    gap: 25px;
-    transition: 0.4s ease;
-}
-
-.education-card:hover {
-    transform: translateX(10px); /* Animasi geser sedikit ke kanan saat di-hover */
-    box-shadow: 0 10px 30px rgba(0, 243, 255, 0.2);
-    border-color: var(--neon-cyan);
-}
-
-.edu-icon {
-    background: var(--neon-cyan);
-    color: var(--bg-dark);
-    width: 65px;
-    height: 65px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    flex-shrink: 0;
-    box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
-}
-
-.edu-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.edu-details h3 {
-    margin-bottom: 5px;
-    font-size: 1.3rem;
-}
-
-.edu-details h3 a {
-    color: var(--text-light);
-    text-decoration: none;
-    transition: 0.3s ease;
-    cursor: none; /* Menyesuaikan custom cursor Anda */
-}
-
-/* Efek neon saat nama sekolah diarahkan kursor */
-.edu-details h3 a:hover {
-    color: var(--neon-cyan);
-    text-shadow: 0 0 8px var(--neon-cyan);
-}
-
-.edu-details h4 {
-    color: var(--neon-cyan);
-    font-size: 1.05rem;
-    margin-bottom: 5px;
-    font-weight: 500;
-}
-
-.edu-details p {
-    color: #aaa;
-    font-size: 0.95rem;
-}
-
 /* Responsive (Mobile) */
 @media screen and (max-width: 768px) {
-
-    .education-card {
-        flex-direction: column;
-        text-align: center;
-        padding: 25px 20px;
-    }
-
-    .education-card:hover {
-        transform: translateY(-5px); 
-    }
-
     .nav-links {
         position: fixed;
         right: -100%;
@@ -513,4 +428,114 @@ body {
 .cerita-card .card-content .card-image {
     display: block;
     margin: 0 auto;
+}
+
+/* =========================================
+   Album Section & Audio
+   ========================================= */
+.audio-wrapper {
+    text-align: center;
+    margin-bottom: 50px;
+    padding: 20px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-glow.active-music {
+    background: var(--neon-cyan);
+    color: var(--bg-dark);
+    box-shadow: 0 0 20px var(--neon-cyan);
+}
+
+.album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.album-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    height: 250px;
+}
+
+.album-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.album-item .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 243, 255, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 2.5rem;
+    color: var(--bg-dark);
+}
+
+.album-item:hover img {
+    transform: scale(1.1);
+}
+
+.album-item:hover .overlay {
+    opacity: 1;
+}
+
+/* =========================================
+   Lightbox Modal (Zoom Foto)
+   ========================================= */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 10, 12, 0.95);
+    backdrop-filter: blur(8px);
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 85%;
+    max-height: 85vh;
+    border-radius: 10px;
+    box-shadow: 0 0 30px var(--neon-cyan);
+    animation: zoomIn 0.4s ease;
+    object-fit: contain;
+}
+
+.close-lightbox {
+    position: absolute;
+    top: 25px;
+    right: 45px;
+    color: var(--text-light);
+    font-size: 50px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close-lightbox:hover {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+@keyframes zoomIn {
+    from {transform: scale(0.5); opacity: 0;}
+    to {transform: scale(1); opacity: 1;}
 }
