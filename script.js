@@ -135,3 +135,87 @@ particlesJS("particles-js", {
     },
     "retina_detect": true
 });
+
+// 6. Audio Player Toggle & Autoplay Trick
+const musicToggleBtn = document.getElementById('music-toggle');
+const bgMusic = document.getElementById('bg-music');
+let isPlaying = false;
+
+// Fungsi untuk mengubah tampilan tombol
+function updateButtonState() {
+    if (isPlaying) {
+        musicToggleBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Music';
+        musicToggleBtn.classList.add('active-music');
+    } else {
+        musicToggleBtn.innerHTML = '<i class="fas fa-play"></i> Play Music';
+        musicToggleBtn.classList.remove('active-music');
+    }
+}
+
+if (musicToggleBtn && bgMusic) {
+    // 1. Coba putar otomatis saat halaman selesai dimuat
+    bgMusic.play().then(() => {
+        isPlaying = true;
+        updateButtonState();
+    }).catch(() => {
+        console.log("Autoplay ditahan oleh browser sampai ada interaksi user.");
+    });
+
+    // 2. Tombol manual Play/Pause
+    musicToggleBtn.addEventListener('click', () => {
+        if (isPlaying) {
+            bgMusic.pause();
+        } else {
+            bgMusic.play();
+        }
+        isPlaying = !isPlaying;
+        updateButtonState();
+    });
+
+    // 3. Trik: Putar otomatis saat user pertama kali scroll atau klik di mana saja
+    const autoPlayOnInteract = () => {
+        if (!isPlaying) {
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                updateButtonState();
+            }).catch(() => {});
+        }
+        // Hapus pendeteksi setelah musik berhasil terputar agar tidak memberatkan website
+        document.removeEventListener('click', autoPlayOnInteract);
+        document.removeEventListener('scroll', autoPlayOnInteract);
+        document.removeEventListener('touchstart', autoPlayOnInteract);
+    };
+
+    // Pasang pendeteksi interaksi ke seluruh halaman
+    document.addEventListener('click', autoPlayOnInteract);
+    document.addEventListener('scroll', autoPlayOnInteract);
+    document.addEventListener('touchstart', autoPlayOnInteract); // Untuk pengguna HP
+}
+
+// 7. Lightbox Gallery (Zoom Foto)
+const albumItems = document.querySelectorAll('.album-item');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const closeLightbox = document.querySelector('.close-lightbox');
+
+if (albumItems.length > 0 && lightbox && lightboxImg) {
+    albumItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const imgSrc = item.querySelector('img').src;
+            lightboxImg.src = imgSrc;
+            lightbox.style.display = 'block';
+        });
+    });
+
+    // Tutup saat tombol 'X' diklik
+    closeLightbox.addEventListener('click', () => {
+        lightbox.style.display = 'none';
+    });
+
+    // Tutup saat area luar gambar diklik
+    lightbox.addEventListener('click', (e) => {
+        if (e.target !== lightboxImg) {
+            lightbox.style.display = 'none';
+        }
+    });
+}
